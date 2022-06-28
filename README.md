@@ -4,7 +4,7 @@ Dorkali a program written in golang to search query in search engines.
 ## Installing
 Install script by:
 ```bash
-GO111MODULE=off go get github.com/aWolver/dorkali/cmd/...
+GO111MODULE=off go get -u github.com/aWolver/dorkali/cmd/...
 ```
 
 > Script will install in $GOPATH/bin

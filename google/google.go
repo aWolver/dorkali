@@ -23,7 +23,7 @@ var (
 )
 
 const (
-	Version = "v1.0.0"
+	Version = "v1.0.4"
 
 	stdUserAgent = "Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0"
 
@@ -73,7 +73,7 @@ func (engine *GoogleEngine) Start() error {
 	engine.Opt.Query = parser.Arg(0)
 
 	if engine.Opt.Query == "" {
-		return fmt.Errorf("error: query is required. use '%s help google' flag to see information", os.Args[0])
+		return fmt.Errorf("error: query is required. use '%s help google' to see information", os.Args[0])
 	}
 	return nil
 }
@@ -83,7 +83,7 @@ func (engine *GoogleEngine) Version() string {
 }
 
 func (engine *GoogleEngine) Description() string {
-	return "Searches dorks in google search engine"
+	return "Searches in google search engine"
 }
 
 func (engine *GoogleEngine) Usage() {
@@ -112,6 +112,7 @@ func (engine *GoogleEngine) Search(interface{}) (*http.Response, error) {
 			for _, c := range resp.Cookies() {
 				req.AddCookie(c)
 			}
+			req.Header.Add("Referer", resp.Request.URL.String())
 		}
 	}
 
@@ -127,7 +128,6 @@ func (engine *GoogleEngine) Search(interface{}) (*http.Response, error) {
 	req.Header["DNT"] = []string{"1"}
 	req.Header.Add("Accept", "text/html")
 	req.Header.Add("Alt-Used", "www.google.com")
-	req.Header.Add("Cache-Control", "max-age=0")
 	req.Header.Add("Host", fmt.Sprintf("www.google%s", engine.Opt.Tld))
 
 	for _, v := range engine.Opt.Header.Collected {
@@ -226,8 +226,6 @@ func (engine *GoogleEngine) ParseHTML(h string) ([]dorkali.Result, error) {
 func generate_url(query, tld, lang, country, inurl, intext, filetype, ext string, num, start int, safe bool) string {
 	u, _ := url.Parse(fmt.Sprintf(URL, tld))
 	q := u.Query()
-
-	q.Set("client", "firefox-b-e")
 
 	if lang != "" {
 		q.Set("lr", "lang_"+url.QueryEscape(lang))

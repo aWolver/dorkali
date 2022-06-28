@@ -35,7 +35,7 @@ type Engine interface {
 	// SearchContext searchs query and returns response
 	Search(query interface{}) (*http.Response, error)
 
-	// ParseResponse parses returned response from .SearchContext(...) method
+	// ParseResponse parses returned response from .Search(...) method
 	ParseResponse(response *http.Response) ([]Result, error)
 
 	// ParseHTML parses html responsed from google

@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	Version         = "v1.0.0"
-	VersionMesssage = "dorkali " + Version + " ( by aWolver ) | go %s\n"
+	Version         = "v1.1.3"
+	VersionMesssage = "dorkali " + Version + " ( by aWolver ) / %s\n"
 	UsageMessage    = "Dorkali a program written in golang to dorks queries in search engines\n\n" +
 		"Usage:\n" +
 		"\t%s [list | version [engineName] | help [engineName]]\n" +
